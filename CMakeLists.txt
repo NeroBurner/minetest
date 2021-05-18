@@ -57,7 +57,19 @@ endif()
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/Modules/")
 
 
-find_package(IrrlichtMt QUIET)
+if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/lib/irrlichtmt")
+	message(STATUS "Using user provided IrrlichtMt at subdirectory 'lib/irrlichtmt'")
+	# tell IrrlichtMt to create a static library
+	set(BUILD_SHARED_LIBS OFF CACHE BOOL "Build shared library" FORCE)
+	add_subdirectory(lib/irrlichtmt)
+	if(NOT TARGET IrrlichtMt::IrrlichtMt)
+		message(FATAL_ERROR "IrrlichtMt project at subdirectory 'lib/irrlichtmt' must provide a 'IrrlichtMt::IrrlichtMt' cmake target.")
+	endif()
+	# set include dir for server only build
+	set(IRRLICHT_INCLUDE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/lib/irrlichtmt/include")
+else()
+	find_package(IrrlichtMt QUIET)
+endif()
 if(NOT TARGET IrrlichtMt::IrrlichtMt)
 	if(BUILD_CLIENT)
 		message(FATAL_ERROR "IrrlichtMt is required to build the client, but it was not found.")
