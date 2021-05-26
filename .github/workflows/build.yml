@@ -221,9 +221,6 @@ jobs:
   msvc:
     name: VS 2019 ${{ matrix.config.arch }}-${{ matrix.type }}
     runs-on: windows-2019
-    #### Disabled due to Irrlicht switch
-    if: false
-    #### Disabled due to Irrlicht switch
     env:
       VCPKG_VERSION: 0bf3923f9fab4001c00f0f429682a0853b5749e0
 #                    2020.11
@@ -259,6 +256,10 @@ jobs:
           appendedCacheKey: ${{ matrix.config.vcpkg_triplet }}
           vcpkgGitCommitId: ${{ env.VCPKG_VERSION }}
           vcpkgTriplet: ${{ matrix.config.vcpkg_triplet }}
+
+      - name: Get IrrlichtMt as subfolder
+        run: |
+          git clone --depth 1 https://github.com/minetest/irrlicht.git lib/irrlichtmt
 
       - name: CMake
         run: |
