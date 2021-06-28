@@ -2470,8 +2470,8 @@ void Game::updatePlayerControl(const CameraOrientation &cam)
 	// autoforward if set: move towards pointed position at maximum speed
 	if (player->getPlayerSettings().continuous_forward &&
 			client->activeObjectsReceived() && !player->isDead()) {
-		control.movement_speed = 1.0;
-		control.movement_direction = 0.0;
+		control.movement_speed = 1.0f;
+		control.movement_direction = 0.0f;
 	}
 
 #ifdef ANDROID

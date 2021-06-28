@@ -240,8 +240,8 @@ public:
 	virtual bool wasKeyReleased(GameKeyType k) = 0;
 	virtual bool cancelPressed() = 0;
 
-	virtual float getMovementSpeed() {return 0.0;}
-	virtual float getMovementDirection() {return 0.0;}
+	virtual float getMovementSpeed() {return 0.0f;}
+	virtual float getMovementDirection() {return 0.0f;}
 
 	virtual void clearWasKeyPressed() {}
 	virtual void clearWasKeyReleased() {}
@@ -288,15 +288,17 @@ public:
 	{
 		return m_receiver->WasKeyReleased(keycache.key[k]) || joystick.wasKeyReleased(k);
 	}
-	virtual float getMovementSpeed() {
+	virtual float getMovementSpeed()
+	{
 		if (m_receiver->IsKeyDown(keycache.key[KeyType::FORWARD]) ||
-		    m_receiver->IsKeyDown(keycache.key[KeyType::BACKWARD]) ||
-		    m_receiver->IsKeyDown(keycache.key[KeyType::RIGHT]) ||
-		    m_receiver->IsKeyDown(keycache.key[KeyType::LEFT]))
+			m_receiver->IsKeyDown(keycache.key[KeyType::BACKWARD]) ||
+			m_receiver->IsKeyDown(keycache.key[KeyType::RIGHT]) ||
+			m_receiver->IsKeyDown(keycache.key[KeyType::LEFT]))
 			return 1.0; /* If there is a keyboard event, assume maximum speed */
 		return joystick.getMovementSpeed();
 	}
-	virtual float getMovementDirection() {
+	virtual float getMovementDirection()
+	{
 		int x = 0;
 		int z = 0;
 

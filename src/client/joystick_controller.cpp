@@ -257,21 +257,22 @@ float JoystickController::getAxisWithoutDead(JoystickAxis axis)
 	s16 v = m_axes_vals[axis];
 
 	if (abs(v) < m_layout.axes_deadzone)
-		return 0.0;
+		return 0.0f;
 
 	v += (v < 0 ? m_layout.axes_deadzone : -m_layout.axes_deadzone);
 
 	return (float)v / ((float)(INT16_MAX - m_layout.axes_deadzone));
 }
 
-float JoystickController::getMovementDirection() {
+float JoystickController::getMovementDirection()
+{
 	return atan2(getAxisWithoutDead(JA_SIDEWARD_MOVE), -getAxisWithoutDead(JA_FORWARD_MOVE));
 }
 
-float JoystickController::getMovementSpeed() {
-	float speed;
-	speed = sqrt(pow(getAxisWithoutDead(JA_FORWARD_MOVE), 2) + pow(getAxisWithoutDead(JA_SIDEWARD_MOVE), 2));
-	if (speed > 1.0)
-		speed = 1.0;
+float JoystickController::getMovementSpeed()
+{
+	float speed = sqrt(pow(getAxisWithoutDead(JA_FORWARD_MOVE), 2) + pow(getAxisWithoutDead(JA_SIDEWARD_MOVE), 2));
+	if (speed > 1.0f)
+		speed = 1.0f;
 	return speed;
 }
